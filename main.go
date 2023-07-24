@@ -3,6 +3,7 @@ package main
 import (
 	"regexp"
 
+	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/widget"
 )
@@ -16,7 +17,7 @@ func main() {
 	//eCompanyNum.SetText("5120")
 	//wPending := widget.NewLabel(lPending)
 	//wActive := widget.NewLabel(lActive)
-	btn := widget.NewButton("Convert", func() {
+	btnConvert := widget.NewButton("Convert", func() {
 
 		var re = regexp.MustCompile(`[[:punct:]]`)
 		str := wMAC.Text
@@ -24,12 +25,18 @@ func main() {
 		wSEP.SetText("SEP" + str45)
 
 	})
+	btnCopy := widget.NewButton("Копировать", func() {
+		// Записываем содержимое в буфер обмена
+		win.Clipboard().SetContent(wSEP.Text)
+	})
 
 	win.SetContent(widget.NewVBox(
 		wMAC,
 		wSEP,
-		btn,
+		btnConvert,
+		btnCopy,
 	))
+	win.Resize(fyne.NewSize(250, 150))
 	win.ShowAndRun()
 
 }
