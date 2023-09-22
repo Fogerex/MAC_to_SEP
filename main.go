@@ -3,9 +3,10 @@ package main
 import (
 	"regexp"
 
-	"fyne.io/fyne"
-	"fyne.io/fyne/app"
-	"fyne.io/fyne/widget"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
@@ -14,9 +15,6 @@ func main() {
 	win := a.NewWindow("MAC to SEP")
 	wMAC := widget.NewEntry()
 	wSEP := widget.NewEntry()
-	//eCompanyNum.SetText("5120")
-	//wPending := widget.NewLabel(lPending)
-	//wActive := widget.NewLabel(lActive)
 	btnConvert := widget.NewButton("Convert", func() {
 
 		var re = regexp.MustCompile(`[[:punct:]]`)
@@ -30,12 +28,17 @@ func main() {
 		win.Clipboard().SetContent(wSEP.Text)
 	})
 
-	win.SetContent(widget.NewVBox(
+
+	vbox := container.NewVBox(
 		wMAC,
 		wSEP,
 		btnConvert,
 		btnCopy,
-	))
+	)
+	
+	win.SetContent(
+		vbox,
+	)
 	win.Resize(fyne.NewSize(250, 150))
 	win.ShowAndRun()
 
